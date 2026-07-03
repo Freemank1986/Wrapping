@@ -8,7 +8,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-4">
         <div>
           <div className="flex items-center gap-2 font-serif text-lg font-semibold">
-            <LogoMark className="h-6 w-6" />
+            <LogoMark id="classic-footer-bow" className="h-6 w-6" />
             {BRAND.name}
           </div>
           <p className="mt-3 max-w-xs text-sm text-muted-foreground">

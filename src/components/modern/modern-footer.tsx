@@ -30,7 +30,11 @@ export function ModernFooter() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
           <div className="flex items-center gap-2.5">
-            <LogoMark className="h-8 w-8" letterColor="var(--primary-foreground)" />
+            <LogoMark
+              id="modern-footer-bow"
+              className="h-8 w-8"
+              letterColor="var(--primary-foreground)"
+            />
             <span className="font-script text-3xl leading-none">{BRAND.name}</span>
           </div>
           <p className="mt-4 max-w-xs text-sm text-primary-foreground/70">

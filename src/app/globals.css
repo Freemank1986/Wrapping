@@ -38,6 +38,9 @@
   --success-foreground: #fbf8f2;
   --warning: #b08d3f;
   --warning-foreground: #241f1b;
+
+  --rose: #d98a72;
+  --rose-foreground: #fbf8f2;
 }
 
 .dark {
@@ -111,8 +114,11 @@
   --warning: #c9a227;
   --warning-foreground: #18140f;
 
+  --rose: #d98a72;
+  --rose-foreground: #fffcfa;
+
   --font-body: var(--font-modern-sans);
-  --font-display: var(--font-modern-sans);
+  --font-display: var(--font-playfair);
 }
 
 @theme inline {
@@ -139,10 +145,13 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-rose: var(--rose);
+  --color-rose-foreground: var(--rose-foreground);
 
   --font-sans: var(--font-body);
   --font-serif: var(--font-display);
   --font-script: var(--font-script);
+  --font-playfair: var(--font-playfair);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -157,6 +166,37 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Modern theme: layered gradient wash so frosted-glass surfaces have
+   something behind them to blur — flat backdrop-blur over a solid color
+   is invisible. */
+[data-theme="modern"] body {
+  background:
+    radial-gradient(1100px circle at 8% -10%, rgba(201, 162, 39, 0.12), transparent 45%),
+    radial-gradient(900px circle at 100% 0%, rgba(217, 138, 114, 0.14), transparent 42%),
+    radial-gradient(1000px circle at 50% 110%, rgba(201, 162, 39, 0.1), transparent 45%),
+    var(--background);
+  background-attachment: fixed;
+}
+
+/* Frosted-glass card surface, applied globally to the shared Card
+   component in Modern theme, plus available directly via .bb-glass for
+   custom (non-Card) surfaces like the hero panels. */
+[data-theme="modern"] [data-slot="card"],
+[data-theme="modern"] .bb-glass {
+  @apply backdrop-blur-xl backdrop-saturate-150;
+  background-color: color-mix(in srgb, var(--card) 62%, transparent);
+  border-color: color-mix(in srgb, white 55%, var(--border));
+  box-shadow:
+    0 1px 1px rgba(255, 255, 255, 0.6) inset,
+    0 12px 32px -12px rgba(24, 20, 15, 0.18);
+}
+
+[data-theme="modern"] .bb-glass-dark {
+  @apply backdrop-blur-xl backdrop-saturate-150;
+  background-color: color-mix(in srgb, var(--primary) 55%, transparent);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 @keyframes bb-lid-off {
@@ -230,3 +270,4 @@
     transition-duration: 0.001ms !important;
   }
 }
+

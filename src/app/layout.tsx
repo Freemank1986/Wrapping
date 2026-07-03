@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, Manrope, Alex_Brush } from "next/font/google";
+import { Fraunces, Inter, Manrope, Alex_Brush, Playfair_Display } from "next/font/google";
 import { Toaster } from "sonner";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -32,6 +32,12 @@ const script = Alex_Brush({
   weight: "400",
 });
 
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+});
+
 export const metadata: Metadata = {
   title: `${BRAND.name} — ${BRAND.tagline}`,
   description:
@@ -50,7 +56,7 @@ export default async function RootLayout({
     <html
       lang="en"
       data-theme={theme}
-      className={`${display.variable} ${body.variable} ${modernSans.variable} ${script.variable} h-full antialiased`}
+      className={`${display.variable} ${body.variable} ${modernSans.variable} ${script.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
         {isModern ? <ModernHeader theme={theme} /> : <SiteHeader theme={theme} />}

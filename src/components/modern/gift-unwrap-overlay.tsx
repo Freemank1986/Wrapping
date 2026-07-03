@@ -24,7 +24,7 @@ export function GiftUnwrapOverlay() {
             viewBox="0 0 64 64"
             className="absolute left-1/2 top-1/2 h-14 w-14 -translate-x-1/2 -translate-y-1/2"
           >
-            <BowPaths color="var(--accent)" />
+            <BowPaths id="transition-bow" />
           </svg>
         </div>
       </div>

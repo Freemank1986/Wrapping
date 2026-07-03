@@ -2,18 +2,21 @@ import { cn } from "@/lib/utils";
 import { BowPaths } from "./bow";
 
 /**
- * Hand-built brand mark: a bold "B" monogram with a bow ribbon tied across
- * the top, standing in for the sourced logo file (only a preview screenshot
- * was available, not production assets).
+ * Brand mark: a bold serif "B" monogram with a gold bow ribbon tied across
+ * the top, matching the sourced logo. `id` must be unique per render site
+ * (used to scope the bow's SVG gradient) since this can appear more than
+ * once on a page (header + footer).
  */
 export function LogoMark({
   className,
-  bowColor = "#c9a227",
+  id = "logo-bow",
   letterColor = "currentColor",
+  flatBow,
 }: {
   className?: string;
-  bowColor?: string;
+  id?: string;
   letterColor?: string;
+  flatBow?: string;
 }) {
   return (
     <svg
@@ -24,18 +27,17 @@ export function LogoMark({
     >
       <text
         x="32"
-        y="57"
+        y="58"
         textAnchor="middle"
-        fontFamily="var(--font-display), Georgia, serif"
+        fontFamily="var(--font-playfair), Georgia, serif"
         fontWeight="700"
-        fontSize="46"
+        fontSize="48"
         fill={letterColor}
       >
         B
       </text>
 
-      <BowPaths color={bowColor} />
-      <circle cx="32" cy="22.5" r="1.6" fill="var(--background, #fff)" opacity="0.55" />
+      <BowPaths id={id} flat={flatBow} />
     </svg>
   );
 }
