@@ -46,3 +46,7 @@ next-env.d.ts
 # sqlite dev database
 /prisma/dev.db
 /prisma/dev.db-journal
+
+# python bytecode cache (from running vendored skill scripts)
+__pycache__/
+*.pyc
