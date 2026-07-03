@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { getPricingConfig } from "@/lib/pricing-config";
 import { formatCents } from "@/lib/pricing";
 
-export const metadata = { title: "Pricing — Wrapt" };
+export const metadata = { title: "Pricing — Bliss & Bow" };
 
 export default async function PricingPage() {
   const config = await getPricingConfig();

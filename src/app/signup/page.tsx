@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { SignupForm } from "./signup-form";
 
-export const metadata = { title: "Create an account — Wrapt" };
+export const metadata = { title: "Create an account — Bliss & Bow" };
 
 export default function SignupPage() {
   return (

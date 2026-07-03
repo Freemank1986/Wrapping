@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Fraunces, Inter, Manrope, Alex_Brush } from "next/font/google";
 import { Toaster } from "sonner";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { ModernHeader } from "@/components/modern/modern-header";
+import { ModernFooter } from "@/components/modern/modern-footer";
+import { GiftPageTransition } from "@/components/modern/gift-page-transition";
+import { getTheme } from "@/lib/theme";
+import { BRAND } from "@/lib/brand";
 import "./globals.css";
 
 const display = Fraunces({
@@ -16,26 +21,47 @@ const body = Inter({
   subsets: ["latin"],
 });
 
+const modernSans = Manrope({
+  variable: "--font-modern-sans",
+  subsets: ["latin"],
+});
+
+const script = Alex_Brush({
+  variable: "--font-script",
+  subsets: ["latin"],
+  weight: "400",
+});
+
 export const metadata: Metadata = {
-  title: "Wrapt — Gift wrapping, handled",
+  title: `${BRAND.name} — ${BRAND.tagline}`,
   description:
     "Beautifully wrapped gifts without the tape, the tears, or the time. Schedule a pickup or delivery and get back the evening you were going to lose to wrapping paper.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const theme = await getTheme();
+  const isModern = theme === "modern";
+
   return (
     <html
       lang="en"
-      className={`${display.variable} ${body.variable} h-full antialiased`}
+      data-theme={theme}
+      className={`${display.variable} ${body.variable} ${modernSans.variable} ${script.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
-        <SiteHeader />
-        <main className="flex-1 flex flex-col">{children}</main>
-        <SiteFooter />
+        {isModern ? <ModernHeader theme={theme} /> : <SiteHeader theme={theme} />}
+        {isModern ? (
+          <GiftPageTransition>
+            <main className="flex-1 flex flex-col">{children}</main>
+          </GiftPageTransition>
+        ) : (
+          <main className="flex-1 flex flex-col">{children}</main>
+        )}
+        {isModern ? <ModernFooter /> : <SiteFooter />}
         <Toaster richColors position="top-center" />
       </body>
     </html>

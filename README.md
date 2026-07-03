@@ -1,9 +1,18 @@
-# Wrapt
+# Bliss & Bow
+
+*Wrapped in Bliss.*
 
 A local gift-wrapping service's booking site: marketing pages, tiered per-item
 pricing with a flat-rate Holiday Bundle, a boutique/retail partner page, a
 workshop signup page, customer accounts, an admin-reviewed order flow, and
 Stripe checkout.
+
+The site ships with two full visual themes, switchable at any time from the
+header toggle and persisted in a cookie: **Modern** (default) — a sleeker,
+animated design with a gift-unwrap page transition — and **Classic**, the
+original warm-editorial design, kept intact as a fallback. Both reflect the
+same Bliss & Bow branding; only the visual language differs. See
+[Themes](#themes) below.
 
 ## Stack
 
@@ -37,9 +46,9 @@ npm run dev
 
 Open http://localhost:3000.
 
-**Seeded admin login:** `admin@wrapt.local` / `AdminWrap123!` (override via
-`SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` before seeding). Customer accounts
-are created through the normal `/signup` flow.
+**Seeded admin login:** `admin@blissandbow.local` / `AdminBow123!` (override
+via `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` before seeding). Customer
+accounts are created through the normal `/signup` flow.
 
 ## Deploying (Vercel)
 
@@ -93,6 +102,29 @@ charge: an admin reviews and approves (or declines with a reason) at
 promise the shop can't actually keep. Only after approval does the customer
 see a "Pay now" button, which creates a Stripe Checkout session.
 
+## Themes
+
+`src/lib/theme.ts` reads a `bb-theme` cookie (`"classic" | "modern"`, default
+`"modern"`) server-side in the root layout, which decides which header,
+footer, and home page component tree renders, and stamps `data-theme` on
+`<html>`. `src/app/globals.css` defines a full second set of design tokens
+under `[data-theme="modern"]` (colors, radius, fonts) — since nearly every
+component is built on those CSS variables (`bg-background`, `text-primary`,
+etc.) rather than hardcoded colors, most pages re-skin automatically without
+per-page changes. Only the home page, header, and footer have fully separate
+Modern/Classic component trees (`src/components/modern/` vs.
+`src/components/classic/` and `site-header.tsx`/`site-footer.tsx`).
+
+The header's toggle calls a server action (`src/app/actions/theme.ts`) that
+sets the cookie; per Next's cookie-in-Server-Action behavior, that
+automatically re-renders the current route with the new theme.
+
+The Modern theme also renders `GiftPageTransition`
+(`src/components/modern/`) around page content — a client component that
+detects route changes and plays a brief gift-box-opening animation between
+navigations, skipped entirely when the OS-level `prefers-reduced-motion` is
+set.
+
 ## Payments
 
 Checkout works out of the box in a "not configured" state — the Pay button
@@ -114,10 +146,15 @@ prisma/schema.prisma        Data model (User, PricingConfig, Order, leads)
 prisma/seed.ts               Default pricing + admin user
 src/lib/pricing.ts           Pure pricing engine (client + server)
 src/lib/session.ts, dal.ts   Auth session + data access layer
-src/app/actions/             Server actions (auth, orders, pricing, leads)
+src/lib/theme.ts             Theme cookie read (classic | modern)
+src/lib/brand.ts             Brand name/tagline constants
+src/app/actions/             Server actions (auth, orders, pricing, leads, theme)
 src/app/book/                Multi-step booking wizard
 src/app/dashboard/           Customer order history + admin console
 src/app/api/checkout/        Stripe Checkout session creation
 src/app/api/webhooks/stripe/ Stripe webhook handler
 src/components/ui/           Hand-written shadcn-style primitives
+src/components/brand/        Logo mark (SVG) + script wordmark
+src/components/classic/      Classic-theme home page
+src/components/modern/       Modern-theme header, footer, home, page transition
 ```

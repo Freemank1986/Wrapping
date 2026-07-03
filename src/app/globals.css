@@ -75,6 +75,46 @@
   --warning-foreground: #241f1b;
 }
 
+[data-theme="modern"] {
+  --radius: 1.1rem;
+
+  --background: #fffcfa;
+  --foreground: #18140f;
+
+  --card: #ffffff;
+  --card-foreground: #18140f;
+
+  --popover: #ffffff;
+  --popover-foreground: #18140f;
+
+  --primary: #18140f;
+  --primary-foreground: #fffcfa;
+
+  --secondary: #f6e4db;
+  --secondary-foreground: #18140f;
+
+  --muted: #f7efe8;
+  --muted-foreground: #8c7c70;
+
+  --accent: #c9a227;
+  --accent-foreground: #18140f;
+
+  --destructive: #b3432b;
+  --destructive-foreground: #fffcfa;
+
+  --border: #efe1d5;
+  --input: #efe1d5;
+  --ring: #c9a227;
+
+  --success: #2f6b4f;
+  --success-foreground: #fffcfa;
+  --warning: #c9a227;
+  --warning-foreground: #18140f;
+
+  --font-body: var(--font-modern-sans);
+  --font-display: var(--font-modern-sans);
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -102,6 +142,7 @@
 
   --font-sans: var(--font-body);
   --font-serif: var(--font-display);
+  --font-script: var(--font-script);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -115,5 +156,77 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@keyframes bb-lid-off {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-140%) rotate(-18deg);
+    opacity: 0;
+  }
+}
+
+@keyframes bb-ribbon-untie {
+  0% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -400;
+    opacity: 0;
+  }
+}
+
+@keyframes bb-box-fade {
+  0% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes bb-content-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes bb-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-bb-float {
+  animation: bb-float 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }

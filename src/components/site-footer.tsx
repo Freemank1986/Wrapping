@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Gift } from "lucide-react";
+import { LogoMark } from "@/components/brand/logo-mark";
+import { BRAND } from "@/lib/brand";
 
 export function SiteFooter() {
   return (
@@ -7,12 +8,12 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-4">
         <div>
           <div className="flex items-center gap-2 font-serif text-lg font-semibold">
-            <Gift className="h-5 w-5 text-accent" aria-hidden />
-            Wrapt
+            <LogoMark className="h-6 w-6" />
+            {BRAND.name}
           </div>
           <p className="mt-3 max-w-xs text-sm text-muted-foreground">
-            The evening back, the presentation handled. Local gift wrapping for people who
-            have better things to do than fight with tape.
+            {BRAND.tagline}. The evening back, the presentation handled. Local gift wrapping
+            for people who have better things to do than fight with tape.
           </p>
         </div>
 
@@ -65,7 +66,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-border py-4 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Wrapt. All gifts handled with care.
+        © {new Date().getFullYear()} {BRAND.name}. All gifts handled with care.
       </div>
     </footer>
   );

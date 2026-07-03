@@ -13,7 +13,7 @@ import { formatCents, tierLabel } from "@/lib/pricing";
 import { Badge } from "@/components/ui/badge";
 import { OrderActions } from "./order-actions";
 
-export const metadata = { title: "Orders — Wrapt Admin" };
+export const metadata = { title: "Orders — Bliss & Bow Admin" };
 
 const STATUS_PRIORITY: Record<string, number> = {
   PENDING_REVIEW: 0,

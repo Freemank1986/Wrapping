@@ -3,6 +3,7 @@ import { getCurrentUser } from "@/lib/dal";
 import { prisma } from "@/lib/prisma";
 import { getStripe, isStripeConfigured } from "@/lib/stripe";
 import { formatCents, tierLabel } from "@/lib/pricing";
+import { BRAND } from "@/lib/brand";
 
 export async function POST(request: NextRequest) {
   const user = await getCurrentUser();
@@ -54,7 +55,7 @@ export async function POST(request: NextRequest) {
           currency: "usd",
           unit_amount: order.total,
           product_data: {
-            name: `Wrapt — ${tierLabel(order.tier)}${
+            name: `${BRAND.name} — ${tierLabel(order.tier)}${
               order.tier === "HOLIDAY_BUNDLE" ? "" : ` (${order.itemCount} items)`
             }`,
             description: `${order.rush ? "Rush · " : ""}${

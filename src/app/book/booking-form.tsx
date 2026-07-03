@@ -20,6 +20,7 @@ import {
   type PricingConfigValues,
   type Tier,
 } from "@/lib/pricing";
+import { BRAND } from "@/lib/brand";
 
 type BookingFormProps = {
   config: PricingConfigValues;
@@ -481,9 +482,9 @@ export function BookingForm({ config, user }: BookingFormProps) {
                     className="mt-0.5"
                   />
                   <span>
-                    I understand this is a request. Wrapt will review and confirm availability
-                    (especially for rush turnaround) before the order is finalized, and I
-                    won&apos;t be charged until then.
+                    I understand this is a request. {BRAND.name}{" "}
+                    will review and confirm availability (especially for rush turnaround)
+                    before the order is finalized, and I won&apos;t be charged until then.
                   </span>
                 </label>
 

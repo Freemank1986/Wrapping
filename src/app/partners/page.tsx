@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { PartnerLeadForm } from "./partner-lead-form";
 
-export const metadata = { title: "Boutique & Retail Partners — Wrapt" };
+export const metadata = { title: "Boutique & Retail Partners — Bliss & Bow" };
 
 const models = [
   {

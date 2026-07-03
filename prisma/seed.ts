@@ -26,15 +26,15 @@ async function main() {
     console.log("Pricing config already exists, skipping.");
   }
 
-  const adminEmail = process.env.SEED_ADMIN_EMAIL ?? "admin@wrapt.local";
-  const adminPassword = process.env.SEED_ADMIN_PASSWORD ?? "AdminWrap123!";
+  const adminEmail = process.env.SEED_ADMIN_EMAIL ?? "admin@blissandbow.local";
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD ?? "AdminBow123!";
 
   const existingAdmin = await prisma.user.findUnique({ where: { email: adminEmail } });
   if (!existingAdmin) {
     const passwordHash = await bcrypt.hash(adminPassword, 10);
     await prisma.user.create({
       data: {
-        name: "Wrapt Admin",
+        name: "Bliss & Bow Admin",
         email: adminEmail,
         passwordHash,
         role: "ADMIN",

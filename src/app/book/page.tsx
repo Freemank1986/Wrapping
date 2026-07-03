@@ -2,7 +2,7 @@ import { requireUser } from "@/lib/dal";
 import { getPricingConfig } from "@/lib/pricing-config";
 import { BookingForm } from "./booking-form";
 
-export const metadata = { title: "Book a Wrap — Wrapt" };
+export const metadata = { title: "Book a Wrap — Bliss & Bow" };
 
 export default async function BookPage() {
   const user = await requireUser();

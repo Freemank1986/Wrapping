@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export const metadata = { title: "Leads — Wrapt Admin" };
+export const metadata = { title: "Leads — Bliss & Bow Admin" };
 
 export default async function AdminLeadsPage() {
   await requireAdmin();

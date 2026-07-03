@@ -3,7 +3,7 @@ import { getPricingConfig } from "@/lib/pricing-config";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { PricingForm } from "./pricing-form";
 
-export const metadata = { title: "Pricing — Wrapt Admin" };
+export const metadata = { title: "Pricing — Bliss & Bow Admin" };
 
 export default async function AdminPricingPage() {
   await requireAdmin();

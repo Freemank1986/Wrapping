@@ -8,7 +8,7 @@ import { OrderStatusBadge } from "@/components/order-status-badge";
 import { formatCents, tierLabel } from "@/lib/pricing";
 import { PayNowButton } from "./pay-now-button";
 
-export const metadata = { title: "Your orders — Wrapt" };
+export const metadata = { title: "Your orders — Bliss & Bow" };
 
 export default async function DashboardPage({
   searchParams,

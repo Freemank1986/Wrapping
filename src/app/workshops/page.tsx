@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { WorkshopLeadForm } from "./workshop-lead-form";
 
-export const metadata = { title: "Gift Wrapping Workshops — Wrapt" };
+export const metadata = { title: "Gift Wrapping Workshops — Bliss & Bow" };
 
 const formats = [
   {
