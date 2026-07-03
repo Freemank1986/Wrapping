@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TIERS } from "@/lib/pricing";
 import { BRAND } from "@/lib/brand";
-import { GiftStack } from "./gift-stack";
+import { GlassGiftHero } from "./glass-gift-hero";
 import { WrappedInBlissBadge } from "@/components/brand/wrapped-in-bliss-badge";
 
 const painPoints = [
@@ -97,7 +97,7 @@ export function ModernHome() {
           </div>
 
           <div className="relative">
-            <GiftStack />
+            <GlassGiftHero />
             <WrappedInBlissBadge className="absolute -bottom-6 -left-6 hidden h-28 w-28 rotate-[-8deg] bg-background/90 shadow-lg sm:flex" />
           </div>
         </div>
@@ -174,9 +174,7 @@ export function ModernHome() {
             <div
               key={tier.value}
               className={`group rounded-3xl border p-6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl ${
-                tier.value === "HOLIDAY_BUNDLE"
-                  ? "bb-glass-dark border-accent/40 text-primary-foreground"
-                  : "bb-glass"
+                tier.value === "HOLIDAY_BUNDLE" ? "bb-glass-dark" : "bb-glass"
               }`}
             >
               {tier.value === "HOLIDAY_BUNDLE" && (
@@ -185,15 +183,7 @@ export function ModernHome() {
                 </Badge>
               )}
               <h3 className="font-serif text-lg font-bold">{tier.label}</h3>
-              <p
-                className={`mt-2 text-sm ${
-                  tier.value === "HOLIDAY_BUNDLE"
-                    ? "text-primary-foreground/70"
-                    : "text-muted-foreground"
-                }`}
-              >
-                {tier.description}
-              </p>
+              <p className="mt-2 text-sm text-muted-foreground">{tier.description}</p>
             </div>
           ))}
         </div>
@@ -206,9 +196,13 @@ export function ModernHome() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-primary text-primary-foreground">
+      <section className="relative overflow-hidden border-t border-border">
         <div
-          className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 animate-bb-float rounded-full bg-accent/10 blur-3xl"
+          className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 animate-bb-float rounded-full bg-accent/15 blur-3xl"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-rose/10 blur-3xl"
           aria-hidden
         />
         <div className="relative mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 py-24 text-center sm:px-6">
@@ -216,7 +210,7 @@ export function ModernHome() {
           <h2 className="max-w-2xl font-serif text-3xl font-bold tracking-tight sm:text-4xl">
             Tell us what you need wrapped, and by when.
           </h2>
-          <p className="max-w-xl text-primary-foreground/70">
+          <p className="max-w-xl text-muted-foreground">
             We&apos;ll confirm the details — especially for rush orders — before anything is
             charged.
           </p>
@@ -224,12 +218,7 @@ export function ModernHome() {
             <Button size="lg" variant="accent" asChild>
               <Link href="/book">Book your wrap</Link>
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10"
-              asChild
-            >
+            <Button size="lg" variant="outline" asChild>
               <Link href="/workshops">Or book a workshop</Link>
             </Button>
           </div>

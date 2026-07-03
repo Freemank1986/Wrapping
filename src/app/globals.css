@@ -81,41 +81,42 @@
 [data-theme="modern"] {
   --radius: 1.1rem;
 
-  --background: #fffcfa;
-  --foreground: #18140f;
+  /* Deep navy/teal, moody dark atmosphere */
+  --background: #070f18;
+  --foreground: #e9f2f6;
 
-  --card: #ffffff;
-  --card-foreground: #18140f;
+  --card: #101f2c;
+  --card-foreground: #e9f2f6;
 
-  --popover: #ffffff;
-  --popover-foreground: #18140f;
+  --popover: #101f2c;
+  --popover-foreground: #e9f2f6;
 
-  --primary: #18140f;
-  --primary-foreground: #fffcfa;
+  --primary: #eef4f7;
+  --primary-foreground: #081018;
 
-  --secondary: #f6e4db;
-  --secondary-foreground: #18140f;
+  --secondary: #16283a;
+  --secondary-foreground: #e9f2f6;
 
-  --muted: #f7efe8;
-  --muted-foreground: #8c7c70;
+  --muted: #142534;
+  --muted-foreground: #93a9ba;
 
-  --accent: #c9a227;
-  --accent-foreground: #18140f;
+  --accent: #e0b94a;
+  --accent-foreground: #081018;
 
-  --destructive: #b3432b;
-  --destructive-foreground: #fffcfa;
+  --destructive: #e0725a;
+  --destructive-foreground: #1c0f09;
 
-  --border: #efe1d5;
-  --input: #efe1d5;
-  --ring: #c9a227;
+  --border: #1c3244;
+  --input: #1c3244;
+  --ring: #e0b94a;
 
-  --success: #2f6b4f;
-  --success-foreground: #fffcfa;
-  --warning: #c9a227;
-  --warning-foreground: #18140f;
+  --success: #7fd4ac;
+  --success-foreground: #06251a;
+  --warning: #e0b94a;
+  --warning-foreground: #081018;
 
-  --rose: #d98a72;
-  --rose-foreground: #fffcfa;
+  --rose: #e39a83;
+  --rose-foreground: #1c0f09;
 
   --font-body: var(--font-modern-sans);
   --font-display: var(--font-playfair);
@@ -173,9 +174,9 @@
    is invisible. */
 [data-theme="modern"] body {
   background:
-    radial-gradient(1100px circle at 8% -10%, rgba(201, 162, 39, 0.12), transparent 45%),
-    radial-gradient(900px circle at 100% 0%, rgba(217, 138, 114, 0.14), transparent 42%),
-    radial-gradient(1000px circle at 50% 110%, rgba(201, 162, 39, 0.1), transparent 45%),
+    radial-gradient(1100px circle at 12% -10%, rgba(224, 185, 74, 0.14), transparent 45%),
+    radial-gradient(900px circle at 100% 10%, rgba(227, 154, 131, 0.12), transparent 42%),
+    radial-gradient(1200px circle at 50% 115%, rgba(45, 110, 130, 0.35), transparent 55%),
     var(--background);
   background-attachment: fixed;
 }
@@ -186,17 +187,21 @@
 [data-theme="modern"] [data-slot="card"],
 [data-theme="modern"] .bb-glass {
   @apply backdrop-blur-xl backdrop-saturate-150;
-  background-color: color-mix(in srgb, var(--card) 62%, transparent);
-  border-color: color-mix(in srgb, white 55%, var(--border));
+  background-color: color-mix(in srgb, var(--card) 55%, transparent);
+  border-color: color-mix(in srgb, white 14%, var(--border));
   box-shadow:
-    0 1px 1px rgba(255, 255, 255, 0.6) inset,
-    0 12px 32px -12px rgba(24, 20, 15, 0.18);
+    0 1px 1px rgba(255, 255, 255, 0.08) inset,
+    0 24px 48px -20px rgba(0, 0, 0, 0.6);
 }
 
+/* Premium gold-glass accent panel (Holiday Bundle highlight) */
 [data-theme="modern"] .bb-glass-dark {
   @apply backdrop-blur-xl backdrop-saturate-150;
-  background-color: color-mix(in srgb, var(--primary) 55%, transparent);
-  border-color: rgba(255, 255, 255, 0.12);
+  background-color: color-mix(in srgb, var(--accent) 20%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  box-shadow:
+    0 1px 1px rgba(255, 255, 255, 0.1) inset,
+    0 24px 48px -20px rgba(0, 0, 0, 0.6);
 }
 
 @keyframes bb-lid-off {
