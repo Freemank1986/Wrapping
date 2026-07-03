@@ -12,7 +12,7 @@ Stripe checkout.
   `shadcn` CLI's registry host isn't reachable from this environment, so the
   components under `src/components/ui/` are written directly instead of
   fetched
-- **Prisma 7** + SQLite (via `@prisma/adapter-better-sqlite3`) for local dev
+- **Prisma 7** + PostgreSQL (via `@prisma/adapter-pg`)
 - Session auth via signed JWT cookies (`jose`) + `bcryptjs`, following the
   pattern in Next's own [authentication guide](https://nextjs.org/docs/app/guides/authentication) —
   no third-party auth library
@@ -20,14 +20,17 @@ Stripe checkout.
 
 ## Getting started
 
+You need a Postgres database — a local install, `docker run -p 5432:5432 postgres`,
+or a free hosted instance (Neon, Supabase, Vercel Postgres all work).
+
 ```bash
 npm install
 cp .env.example .env
-# generate a real value for SESSION_SECRET:
+# set DATABASE_URL to your Postgres connection string, and generate SESSION_SECRET:
 openssl rand -base64 32
 
-npx prisma migrate dev   # creates prisma/dev.db
-npx prisma db seed       # seeds default pricing + an admin account
+npx prisma migrate deploy   # applies prisma/migrations/ to your database
+npx prisma db seed          # seeds default pricing + an admin account
 
 npm run dev
 ```
@@ -37,6 +40,24 @@ Open http://localhost:3000.
 **Seeded admin login:** `admin@wrapt.local` / `AdminWrap123!` (override via
 `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` before seeding). Customer accounts
 are created through the normal `/signup` flow.
+
+## Deploying (Vercel)
+
+1. Import this repo at [vercel.com/new](https://vercel.com/new) — this also
+   wires up auto-deploy on push and PR preview URLs.
+2. Provision a Postgres database (Vercel Postgres, Neon, or Supabase all have
+   free tiers) and copy its connection string.
+3. In the Vercel project's environment variables, set:
+   - `DATABASE_URL` — the Postgres connection string from step 2
+   - `SESSION_SECRET` — output of `openssl rand -base64 32`
+   - `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` — optional, only needed
+     for payments to work (see [Payments](#payments) below)
+4. Deploy. `npm run build` runs `prisma migrate deploy` automatically before
+   `next build`, so the schema is applied on every deploy — no manual
+   migration step.
+5. Run `npx prisma db seed` once, pointed at the production `DATABASE_URL`
+   (from your machine, with `DATABASE_URL` set to the production value), to
+   create the default pricing config and admin account.
 
 ## How pricing works
 
