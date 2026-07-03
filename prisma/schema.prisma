@@ -1,0 +1,111 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+enum Tier {
+  SIMPLE
+  STANDARD
+  ELABORATE
+  HOLIDAY_BUNDLE
+}
+
+enum DeliveryType {
+  PICKUP
+  DELIVERY
+}
+
+enum OrderStatus {
+  PENDING_REVIEW
+  APPROVED
+  DECLINED
+  PAID
+  COMPLETED
+  CANCELED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  phone        String?
+  role         Role     @default(CUSTOMER)
+  createdAt    DateTime @default(now())
+  orders       Order[]
+}
+
+model PricingConfig {
+  id                  String   @id @default(cuid())
+  simplePricePerItem  Int
+  standardPricePerItem Int
+  elaboratePricePerItem Int
+  deliveryFee         Int
+  rushFee             Int
+  minimumOrder        Int
+  holidayBundlePrice  Int
+  holidayBundleNote   String
+  updatedAt           DateTime @updatedAt
+}
+
+model Order {
+  id             String       @id @default(cuid())
+  user           User         @relation(fields: [userId], references: [id])
+  userId         String
+  tier           Tier
+  itemCount      Int
+  deliveryType   DeliveryType
+  addressStreet  String?
+  addressCity    String?
+  addressState   String?
+  addressZip     String?
+  rush           Boolean      @default(false)
+  neededBy       DateTime
+  contactName    String
+  contactEmail   String
+  contactPhone   String
+  notes          String?
+  subtotal       Int
+  deliveryFee    Int
+  rushFee        Int
+  total          Int
+  status         OrderStatus  @default(PENDING_REVIEW)
+  declineReason  String?
+  stripeSessionId String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model WorkshopLead {
+  id             String   @id @default(cuid())
+  name           String
+  email          String
+  phone          String?
+  groupSize      Int?
+  preferredDate  DateTime?
+  message        String?
+  createdAt      DateTime @default(now())
+}
+
+model PartnerLead {
+  id           String   @id @default(cuid())
+  businessName String
+  contactName  String
+  email        String
+  phone        String?
+  businessType String
+  message      String?
+  createdAt    DateTime @default(now())
+}
