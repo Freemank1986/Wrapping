@@ -1,0 +1,56 @@
+import { PrismaClient } from "../src/generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import bcrypt from "bcryptjs";
+
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+const prisma = new PrismaClient({ adapter });
+
+async function main() {
+  const existingConfig = await prisma.pricingConfig.findFirst();
+  if (!existingConfig) {
+    await prisma.pricingConfig.create({
+      data: {
+        simplePricePerItem: 900,
+        standardPricePerItem: 1600,
+        elaboratePricePerItem: 2800,
+        deliveryFee: 1500,
+        rushFee: 2000,
+        minimumOrder: 2500,
+        holidayBundlePrice: 22500,
+        holidayBundleNote:
+          "Best for 15+ gifts. One flat price, no counting items — just hand over the whole pile.",
+      },
+    });
+    console.log("Seeded default pricing config.");
+  } else {
+    console.log("Pricing config already exists, skipping.");
+  }
+
+  const adminEmail = process.env.SEED_ADMIN_EMAIL ?? "admin@blissandbow.local";
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD ?? "AdminBow123!";
+
+  const existingAdmin = await prisma.user.findUnique({ where: { email: adminEmail } });
+  if (!existingAdmin) {
+    const passwordHash = await bcrypt.hash(adminPassword, 10);
+    await prisma.user.create({
+      data: {
+        name: "Bliss & Bow Admin",
+        email: adminEmail,
+        passwordHash,
+        role: "ADMIN",
+      },
+    });
+    console.log(`Seeded admin user: ${adminEmail} / ${adminPassword}`);
+  } else {
+    console.log("Admin user already exists, skipping.");
+  }
+}
+
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
