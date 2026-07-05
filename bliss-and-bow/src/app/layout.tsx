@@ -18,8 +18,8 @@ const body = Inter({
   variable: "--font-body",
 });
 
-// See src/lib/site-config.ts for the production domain TODO — metadataBase
-// resolves relative OG/Twitter image URLs into absolute ones.
+// metadataBase (src/lib/site-config.ts) resolves relative OG/Twitter image
+// URLs into absolute ones.
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
