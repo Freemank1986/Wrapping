@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { PageTransition } from "@/components/page-transition";
 import { SiteHeader } from "@/components/site-header";
@@ -69,6 +70,7 @@ export default function RootLayout({
         <SiteHeader />
         <PageTransition>{children}</PageTransition>
         <SiteFooter />
+        <Analytics />
       </body>
     </html>
   );
