@@ -58,18 +58,18 @@ export function SuccessContent() {
           : "Your payment went through. "}
         We&apos;ll see you soon — book your drop-off time whenever you&apos;re ready.
         {status === "loading" && (
-          <span className="mt-2 block text-sm text-charcoal/50" aria-live="polite">
+          <span className="mt-2 block text-sm text-charcoal/70" aria-live="polite">
             Confirming your order details…
           </span>
         )}
         {status === "error" && (
-          <span className="mt-2 block text-sm text-charcoal/50" aria-live="polite">
+          <span className="mt-2 block text-sm text-charcoal/70" aria-live="polite">
             We couldn&apos;t load your receipt details, but if you completed
             checkout, you&apos;re all set — no need to try again.
           </span>
         )}
         {status === "loaded" && session?.customerEmail && (
-          <span className="mt-2 block text-sm text-charcoal/60">
+          <span className="mt-2 block text-sm text-charcoal/70">
             A receipt is on its way to {session.customerEmail}.
           </span>
         )}

@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { PageTransition } from "@/components/page-transition";
+import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { LocalBusinessJsonLd } from "@/components/local-business-jsonld";
+import { SITE_URL } from "@/lib/site-config";
 
 const heading = Playfair_Display({
   subsets: ["latin"],
@@ -16,10 +18,10 @@ const body = Inter({
   variable: "--font-body",
 });
 
-// TODO: replace with the real production domain once one is registered —
-// metadataBase resolves relative OG/Twitter image URLs into absolute ones.
+// See src/lib/site-config.ts for the production domain TODO — metadataBase
+// resolves relative OG/Twitter image URLs into absolute ones.
 export const metadata: Metadata = {
-  metadataBase: new URL("https://blissandbow.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Bliss & Bow | Luxury Gift Wrapping Service Near You",
     template: "%s | Bliss & Bow",
@@ -64,6 +66,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${heading.variable} ${body.variable} bg-cream text-charcoal antialiased`}>
         <LocalBusinessJsonLd />
+        <SiteHeader />
         <PageTransition>{children}</PageTransition>
         <SiteFooter />
       </body>

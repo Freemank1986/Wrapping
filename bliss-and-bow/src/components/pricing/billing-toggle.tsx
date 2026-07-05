@@ -22,7 +22,7 @@ export function BillingToggle({
           key={option.value}
           onClick={() => onChange(option.value)}
           className={`relative rounded-full px-6 py-2 text-sm transition-colors duration-200 ${
-            value === option.value ? "text-charcoal" : "text-charcoal/50"
+            value === option.value ? "text-charcoal" : "text-charcoal/70"
           }`}
         >
           {value === option.value && (

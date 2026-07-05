@@ -8,7 +8,7 @@ const OCCASIONS = ["Birthday", "Wedding", "Holiday", "Corporate", "Other"];
 
 const fieldClass =
   "w-full border border-gold/30 bg-white/60 px-4 py-3 text-charcoal placeholder:text-charcoal/40 focus:border-gold focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed";
-const labelClass = "text-xs uppercase tracking-wide text-charcoal/60";
+const labelClass = "text-xs uppercase tracking-wide text-charcoal/70";
 
 export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -26,6 +26,8 @@ export function ContactForm() {
       email: (form.elements.namedItem("email") as HTMLInputElement).value,
       occasion: (form.elements.namedItem("occasion") as HTMLSelectElement).value,
       message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+      // Honeypot — invisible to real visitors, bots tend to fill every field.
+      company: (form.elements.namedItem("company") as HTMLInputElement).value,
     };
 
     try {
@@ -69,6 +71,18 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} aria-busy={submitting} className="space-y-6">
+      {/* Honeypot field: hidden from real users, left for bots to fill in. */}
+      <div className="absolute left-[-9999px]" aria-hidden="true">
+        <label htmlFor="company">Company</label>
+        <input
+          id="company"
+          name="company"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
       <div>
         <label htmlFor="name" className={labelClass}>
           Name

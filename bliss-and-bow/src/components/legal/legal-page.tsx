@@ -24,7 +24,7 @@ export function LegalPage({
           <h1 className="mt-10 font-serif text-4xl font-semibold text-charcoal md:text-5xl">
             {title}
           </h1>
-          <p className="mt-2 text-sm text-charcoal/50">Last updated: {updated}</p>
+          <p className="mt-2 text-sm text-charcoal/70">Last updated: {updated}</p>
 
           <div className="prose-legal mt-10 space-y-8 text-charcoal/80">
             {children}

@@ -3,7 +3,7 @@ import { Container } from "@/components/ui/container";
 import { ManageMembershipLink } from "@/components/manage-membership-link";
 
 const linkClass =
-  "text-xs uppercase tracking-wide text-charcoal/60 hover:text-burgundy hover:underline underline-offset-4";
+  "text-xs uppercase tracking-wide text-charcoal/70 hover:text-burgundy hover:underline underline-offset-4";
 
 export function SiteFooter() {
   return (
@@ -20,7 +20,7 @@ export function SiteFooter() {
               Privacy
             </Link>
           </div>
-          <p className="text-xs text-charcoal/50">
+          <p className="text-xs text-charcoal/70">
             &copy; {new Date().getFullYear()} Bliss &amp; Bow Gift Wrapping Co.
           </p>
         </div>

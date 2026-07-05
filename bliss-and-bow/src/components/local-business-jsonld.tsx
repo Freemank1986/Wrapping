@@ -1,12 +1,13 @@
 import { businessInfo } from "@/lib/business-info";
+import { SITE_URL } from "@/lib/site-config";
 
 export function LocalBusinessJsonLd() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     name: businessInfo.name,
-    image: "https://blissandbow.com/og-image.jpg",
-    url: "https://blissandbow.com",
+    image: `${SITE_URL}/og-image.jpg`,
+    url: SITE_URL,
     telephone: businessInfo.telephone,
     priceRange: businessInfo.priceRange,
     address: {

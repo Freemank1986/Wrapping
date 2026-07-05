@@ -26,7 +26,7 @@ export function PricingSection() {
         </div>
 
         {billing === "perGift" && (
-          <p className="mt-10 text-center text-xs text-charcoal/60">
+          <p className="mt-10 text-center text-xs text-charcoal/70">
             Standard-size boxes. Oversized items +$5–15 — we&apos;ll confirm
             before wrapping.
           </p>
