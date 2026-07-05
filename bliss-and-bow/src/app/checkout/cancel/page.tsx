@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Checkout Canceled — Bliss & Bow",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Checkout Canceled",
+  description: "Your Bliss & Bow checkout was canceled — nothing was charged.",
+  path: "/checkout/cancel",
+  noIndex: true,
+});
 
 export default function CheckoutCancelPage() {
   return (
