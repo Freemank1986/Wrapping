@@ -7,7 +7,6 @@ export interface PricingTier {
   perGift: {
     price: string;
     priceCents: number;
-    priceId: string;
     features: string[];
   };
   monthly: {
@@ -17,13 +16,9 @@ export interface PricingTier {
   };
 }
 
-// Placeholder Stripe Price IDs — replace with the real IDs from the
-// Stripe dashboard before going live. Price IDs aren't secret, so it's
-// fine for them to live here rather than in an env var.
-//
-// priceCents is the source of truth for per-gift pricing math (used by
-// the /book order form's server-side total calculation); keep it in sync
-// with the display `price` string above it.
+// Monthly membership Price IDs are real (from the Stripe test-mode Product
+// catalog). Per-gift orders don't use a Price ID at all — /book computes
+// pricing dynamically from priceCents below (see lib/order-pricing.ts).
 export const pricingTiers: PricingTier[] = [
   {
     id: "essentials",
@@ -31,7 +26,6 @@ export const pricingTiers: PricingTier[] = [
     perGift: {
       price: "$15/gift",
       priceCents: 1500,
-      priceId: "price_essentials_onetime",
       features: [
         "Quality wrapping paper",
         "Coordinated ribbon",
@@ -41,7 +35,7 @@ export const pricingTiers: PricingTier[] = [
     },
     monthly: {
       price: "$39/month",
-      priceId: "price_essentials_monthly",
+      priceId: "price_1TpxLQJaFSugmQmrNAsVl098",
       features: [
         "3 Essentials wraps per month (a $45 value)",
         "Unused wraps roll over one month",
@@ -55,7 +49,6 @@ export const pricingTiers: PricingTier[] = [
     perGift: {
       price: "$28/gift",
       priceCents: 2800,
-      priceId: "price_signature_onetime",
       features: [
         "Premium paper",
         "Satin or velvet ribbon",
@@ -66,7 +59,7 @@ export const pricingTiers: PricingTier[] = [
     },
     monthly: {
       price: "$75/month",
-      priceId: "price_signature_monthly",
+      priceId: "price_1TpxLtJaFSugmQmr35jeKC22",
       features: [
         "3 Signature wraps per month (an $84 value)",
         "Priority scheduling",
@@ -80,7 +73,6 @@ export const pricingTiers: PricingTier[] = [
     perGift: {
       price: "$50/gift",
       priceCents: 5000,
-      priceId: "price_luxe_onetime",
       features: [
         "Designer paper or fabric wrap",
         "Layered luxe ribbon",
@@ -92,7 +84,7 @@ export const pricingTiers: PricingTier[] = [
     },
     monthly: {
       price: "$129/month",
-      priceId: "price_luxe_monthly",
+      priceId: "price_1TpxMLJaFSugmQmrKLcQukfV",
       features: [
         "3 Luxe wraps per month (a $150 value)",
         "Free pickup & delivery",

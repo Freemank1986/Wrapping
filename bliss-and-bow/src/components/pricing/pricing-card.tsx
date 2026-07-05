@@ -20,7 +20,7 @@ export function PricingCard({
 
   const plan = tier[billing];
 
-  async function handleCheckout() {
+  async function handleMembershipCheckout() {
     setLoading(true);
     setError(null);
     try {
@@ -28,8 +28,8 @@ export function PricingCard({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          priceId: plan.priceId,
-          mode: billing === "perGift" ? "payment" : "subscription",
+          priceId: tier.monthly.priceId,
+          mode: "subscription",
         }),
       });
       const data = await res.json();
@@ -107,7 +107,7 @@ export function PricingCard({
           <Button
             variant={tier.featured ? "primary" : "secondary"}
             className="w-full"
-            onClick={handleCheckout}
+            onClick={handleMembershipCheckout}
             disabled={loading}
           >
             {loading ? "Redirecting…" : `Choose ${tier.name}`}
