@@ -6,88 +6,158 @@ export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy",
   description: "Privacy Policy for Bliss & Bow Gift Wrapping Co.",
   path: "/privacy",
-  noIndex: true,
 });
 
 export default function PrivacyPage() {
   return (
-    <LegalPage title="Privacy Policy" updated="[DATE — placeholder]">
+    <LegalPage title="Privacy Policy" updated="July 5, 2026" placeholder={false}>
+      <p>
+        Bliss &amp; Bow (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or
+        &ldquo;our&rdquo;) respects your privacy. This Privacy Policy explains
+        what information we collect through our website blissandbow.com, how
+        we use it, and your choices. It applies to both our gift-wrapping
+        services and any products we sell. By using our website, placing an
+        order, or purchasing a product, you agree to this Policy.
+      </p>
+
       <section>
         <h2 className="font-serif text-xl text-charcoal">1. Information We Collect</h2>
         <p className="mt-3">
-          When you place an order, join a membership, or contact us, we
-          collect information you provide directly — such as your name,
-          email address, and message content — plus payment and billing
-          details processed by Stripe on our behalf. We do not store full
-          payment card numbers ourselves.
+          We collect information you provide directly when you place a
+          service order, purchase a product, or contact us. This may include
+          your name, email address, phone number, billing address, delivery
+          or shipping address, order and product details, and any messages
+          you send us.
+        </p>
+        <p className="mt-3">
+          When you make a payment, your payment card information is collected
+          and processed directly by our third-party payment provider,
+          Stripe. We do not receive or store your full card number.
+        </p>
+        <p className="mt-3">
+          We may also automatically collect basic technical information when
+          you visit our website, such as your device type, browser, and
+          general usage data, through standard web tools and any analytics we
+          use.
         </p>
       </section>
 
       <section>
-        <h2 className="font-serif text-xl text-charcoal">2. How We Use It</h2>
-        <p className="mt-3">
-          We use this information to fulfill orders, manage memberships,
-          respond to inquiries, and send order-related communications (such
-          as receipts and drop-off reminders). [Placeholder — add marketing-
-          communications language here if you plan to send newsletters or
-          promotions, along with an opt-out mechanism.]
-        </p>
+        <h2 className="font-serif text-xl text-charcoal">2. How We Use Your Information</h2>
+        <p className="mt-3">We use your information to:</p>
+        <ul className="mt-3 list-disc space-y-1 pl-5">
+          <li>Process, prepare, and fulfill your service orders and product purchases</li>
+          <li>Communicate with you about your order, including scheduling pickup, delivery, or shipping</li>
+          <li>Handle returns, exchanges, and refunds</li>
+          <li>Respond to your questions and requests</li>
+          <li>Send you updates or promotions, only if you have agreed to receive them</li>
+          <li>Improve our website, services, and products</li>
+          <li>Meet our legal, tax, and accounting obligations</li>
+        </ul>
       </section>
 
       <section>
-        <h2 className="font-serif text-xl text-charcoal">3. Third-Party Services</h2>
+        <h2 className="font-serif text-xl text-charcoal">3. How We Share Your Information</h2>
         <p className="mt-3">
-          Payments and subscription billing are handled by Stripe, Inc.,
-          which processes and stores payment information under its own
-          privacy policy. [Placeholder — list any other third-party tools
-          you use, such as analytics or email providers, once decided.]
+          We do not sell your personal information. We share it only as
+          needed to run our business, including with:
         </p>
+        <ul className="mt-3 list-disc space-y-1 pl-5">
+          <li>Our payment provider, Stripe, to process payments</li>
+          <li>Shipping carriers and delivery services, to fulfill product orders</li>
+          <li>Service providers who help us operate our website or business, under confidentiality obligations</li>
+          <li>Authorities or others when required by law or to protect our rights</li>
+        </ul>
       </section>
 
       <section>
-        <h2 className="font-serif text-xl text-charcoal">4. Cookies</h2>
+        <h2 className="font-serif text-xl text-charcoal">4. Payment Security</h2>
         <p className="mt-3">
-          We use a small, non-tracking cookie to remember which Stripe
-          customer record belongs to your browser, so the &ldquo;Manage
-          membership&rdquo; link works without requiring a separate login.
-          [Placeholder — disclose any additional cookies/analytics once
-          added.]
+          Payments are handled by Stripe, which uses industry-standard
+          security to protect your information. Because we do not store your
+          full payment details, your card data is not held on our systems.
         </p>
       </section>
 
       <section>
         <h2 className="font-serif text-xl text-charcoal">5. Data Retention</h2>
         <p className="mt-3">
-          [Placeholder — describe how long order, contact-form, and payment
-          records are retained.]
+          We keep your information only as long as needed to fulfill your
+          orders, handle returns, meet legal and tax requirements, and
+          resolve any disputes. When it is no longer needed, we take
+          reasonable steps to delete or de-identify it.
         </p>
       </section>
 
       <section>
-        <h2 className="font-serif text-xl text-charcoal">6. Your Rights</h2>
+        <h2 className="font-serif text-xl text-charcoal">6. Your Choices</h2>
+        <p className="mt-3">You may:</p>
+        <ul className="mt-3 list-disc space-y-1 pl-5">
+          <li>Ask us what personal information we hold about you</li>
+          <li>Ask us to correct or delete your information, subject to any legal record-keeping requirements</li>
+          <li>Opt out of promotional messages at any time by contacting us or using the unsubscribe option</li>
+        </ul>
         <p className="mt-3">
-          [Placeholder — describe applicable rights to access, correct, or
-          delete personal information, based on where your customers are
-          located (e.g., CCPA, GDPR) and reviewed by counsel.]
+          To make any of these requests, contact us using the details below.
         </p>
       </section>
 
       <section>
-        <h2 className="font-serif text-xl text-charcoal">7. Changes to This Policy</h2>
+        <h2 className="font-serif text-xl text-charcoal">7. Cookies and Analytics</h2>
         <p className="mt-3">
-          We may update this policy from time to time; the &ldquo;last
-          updated&rdquo; date above will reflect the most recent revision.
+          Our website may use cookies or similar technologies to help it
+          function, remember items in your cart, and understand how visitors
+          use it. You can usually control cookies through your browser
+          settings. Disabling cookies may affect how parts of the website
+          work, including checkout.
         </p>
       </section>
 
       <section>
-        <h2 className="font-serif text-xl text-charcoal">8. Contact</h2>
+        <h2 className="font-serif text-xl text-charcoal">8. Children&rsquo;s Privacy</h2>
         <p className="mt-3">
-          Questions about this policy can be sent through our{" "}
-          <a href="/contact" className="text-burgundy underline underline-offset-2">
-            Contact page
+          Our services and products are intended for adults. We do not
+          knowingly collect personal information from children under 13. If
+          you believe a child has provided us information, please contact us
+          and we will delete it.
+        </p>
+      </section>
+
+      <section>
+        <h2 className="font-serif text-xl text-charcoal">9. Third-Party Links</h2>
+        <p className="mt-3">
+          Our website may link to other sites, such as our payment provider,
+          shipping carriers, or social media pages. We are not responsible
+          for the privacy practices of those sites, and we encourage you to
+          review their policies.
+        </p>
+      </section>
+
+      <section>
+        <h2 className="font-serif text-xl text-charcoal">10. Changes to This Policy</h2>
+        <p className="mt-3">
+          We may update this Privacy Policy from time to time. The updated
+          version will be posted on this page with a revised &ldquo;Last
+          updated&rdquo; date.
+        </p>
+      </section>
+
+      <section>
+        <h2 className="font-serif text-xl text-charcoal">11. Contact Us</h2>
+        <p className="mt-3">
+          If you have any questions about this Privacy Policy or your
+          information, contact us at:
+          <br />
+          Bliss &amp; Bow
+          <br />
+          <a
+            href="mailto:Blissandbowwrapco@gmail.com"
+            className="text-burgundy underline underline-offset-2"
+          >
+            Blissandbowwrapco@gmail.com
           </a>
-          .
+          <br />
+          University City, Missouri
         </p>
       </section>
     </LegalPage>
