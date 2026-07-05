@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { PageTransition } from "@/components/page-transition";
+import { SiteFooter } from "@/components/site-footer";
 
 const heading = Playfair_Display({
   subsets: ["latin"],
@@ -28,6 +29,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${heading.variable} ${body.variable} bg-cream text-charcoal antialiased`}>
         <PageTransition>{children}</PageTransition>
+        <SiteFooter />
       </body>
     </html>
   );

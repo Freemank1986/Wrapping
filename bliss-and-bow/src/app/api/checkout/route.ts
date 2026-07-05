@@ -30,12 +30,20 @@ export async function POST(request: NextRequest) {
 
   const origin = request.nextUrl.origin;
 
-  const session = await stripe.checkout.sessions.create({
-    mode,
-    line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${origin}/pricing?checkout=success`,
-    cancel_url: `${origin}/pricing?checkout=canceled`,
-  });
+  try {
+    const session = await stripe.checkout.sessions.create({
+      mode,
+      line_items: [{ price: priceId, quantity: 1 }],
+      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/checkout/cancel`,
+    });
 
-  return NextResponse.json({ url: session.url });
+    return NextResponse.json({ url: session.url });
+  } catch (err) {
+    console.error("[api/checkout] Stripe error:", err);
+    return NextResponse.json(
+      { error: "Couldn't start checkout. Please try again in a moment." },
+      { status: 502 },
+    );
+  }
 }
