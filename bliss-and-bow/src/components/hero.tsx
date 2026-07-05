@@ -77,7 +77,7 @@ export function Hero() {
           variants={item}
           className="font-serif text-5xl font-semibold text-charcoal sm:text-6xl md:text-7xl"
         >
-          Every Gift, Beautifully Told
+          Every Gift, Blissfully Told
         </motion.h1>
         <motion.p
           variants={item}

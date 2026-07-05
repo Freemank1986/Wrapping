@@ -30,7 +30,7 @@ export function HowItWorks() {
   return (
     <section className="py-24">
       <Container>
-        <SectionHeading eyebrow="How it works" title="Three Steps to Beautiful" />
+        <SectionHeading eyebrow="How it works" title="Three Steps to Bliss" />
         <div className="mt-16 grid gap-10 md:grid-cols-3">
           {steps.map((step, i) => (
             <motion.div
