@@ -3,8 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-
-const OCCASIONS = ["Birthday", "Wedding", "Holiday", "Corporate", "Other"];
+import { OCCASIONS } from "@/lib/occasions";
 
 const fieldClass =
   "w-full border border-gold/30 bg-white/60 px-4 py-3 text-charcoal placeholder:text-charcoal/40 focus:border-gold focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed";

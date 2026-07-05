@@ -6,6 +6,7 @@ export interface PricingTier {
   featured?: boolean;
   perGift: {
     price: string;
+    priceCents: number;
     priceId: string;
     features: string[];
   };
@@ -19,12 +20,17 @@ export interface PricingTier {
 // Placeholder Stripe Price IDs — replace with the real IDs from the
 // Stripe dashboard before going live. Price IDs aren't secret, so it's
 // fine for them to live here rather than in an env var.
+//
+// priceCents is the source of truth for per-gift pricing math (used by
+// the /book order form's server-side total calculation); keep it in sync
+// with the display `price` string above it.
 export const pricingTiers: PricingTier[] = [
   {
     id: "essentials",
     name: "Essentials",
     perGift: {
       price: "$15/gift",
+      priceCents: 1500,
       priceId: "price_essentials_onetime",
       features: [
         "Quality wrapping paper",
@@ -48,6 +54,7 @@ export const pricingTiers: PricingTier[] = [
     featured: true,
     perGift: {
       price: "$28/gift",
+      priceCents: 2800,
       priceId: "price_signature_onetime",
       features: [
         "Premium paper",
@@ -72,6 +79,7 @@ export const pricingTiers: PricingTier[] = [
     name: "Luxe",
     perGift: {
       price: "$50/gift",
+      priceCents: 5000,
       priceId: "price_luxe_onetime",
       features: [
         "Designer paper or fabric wrap",

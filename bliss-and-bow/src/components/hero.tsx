@@ -87,7 +87,9 @@ export function Hero() {
           and tape. Book a slot and let us do the rest.
         </motion.p>
         <motion.div variants={item} className="mt-10">
-          <Button variant="primary">Book Your Wrapping</Button>
+          <Button href="/book" variant="primary">
+            Book Your Wrapping
+          </Button>
         </motion.div>
       </motion.div>
     </section>

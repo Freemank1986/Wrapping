@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Container } from "@/components/ui/container";
+import { Button } from "@/components/ui/button";
 
 const links = [
   { href: "/pricing", label: "Pricing" },
@@ -25,7 +26,7 @@ export function SiteHeader() {
             Bliss &amp; Bow
           </Link>
 
-          <nav className="hidden gap-8 md:flex">
+          <nav className="hidden items-center gap-8 md:flex">
             {links.map((link) => (
               <Link
                 key={link.href}
@@ -39,6 +40,9 @@ export function SiteHeader() {
                 {link.label}
               </Link>
             ))}
+            <Button href="/book" variant="primary" className="px-5 py-2 text-xs">
+              Book Now
+            </Button>
           </nav>
 
           <button
@@ -65,6 +69,15 @@ export function SiteHeader() {
                 {link.label}
               </Link>
             ))}
+            <Link
+              href="/book"
+              onClick={() => setOpen(false)}
+              className={`px-2 py-2 text-sm tracking-wide ${
+                pathname === "/book" ? "text-burgundy" : "text-charcoal/70"
+              }`}
+            >
+              Book Now
+            </Link>
           </nav>
         )}
       </Container>

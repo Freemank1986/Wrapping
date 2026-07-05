@@ -33,6 +33,11 @@ export async function POST(request: NextRequest) {
         customer: session.customer,
         customerEmail: session.customer_details?.email,
         amountTotal: session.amount_total,
+        // Populated for /book orders (name, tier, quantity, rush, delivery,
+        // deliveryAddress, occasion, completionDate, styleNotes, giftMessage,
+        // specialInstructions, totalCents) — this metadata is the order
+        // record until a database and Resend are wired up.
+        orderDetails: session.metadata,
       });
       // TODO: send confirmation email once email sending is wired up.
       break;

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-
-const OCCASIONS = ["Birthday", "Wedding", "Holiday", "Corporate", "Other"] as const;
+import { OCCASIONS } from "@/lib/occasions";
 
 // Simple in-memory rate limit: 5 submissions per IP per 10 minutes. This
 // resets on cold start and doesn't share state across serverless instances,
