@@ -1,5 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
+import { Resend } from "resend";
 import { OCCASIONS } from "@/lib/occasions";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+// Resend's shared sandbox sender — works without a verified domain, but can
+// only deliver to the email address the Resend account was created with.
+// Once blissandbow.com is verified in Resend, switch this to an
+// address on that domain (e.g. "Bliss & Bow <hello@blissandbow.com>").
+const FROM_EMAIL = "Bliss & Bow Website <onboarding@resend.dev>";
+const TO_EMAIL = "Blissandbowwrapco@gmail.com";
 
 // Simple in-memory rate limit: 5 submissions per IP per 10 minutes. This
 // resets on cold start and doesn't share state across serverless instances,
@@ -53,15 +62,21 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Please choose an occasion." }, { status: 400 });
   }
 
-  // TODO: wire up Resend (or similar) to actually send this as an email to
-  // the shop's inbox and/or a confirmation to the sender. For now, just log.
-  console.log("[contact] new submission", {
-    name,
-    email,
-    occasion,
-    message,
-    receivedAt: new Date().toISOString(),
-  });
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: TO_EMAIL,
+      replyTo: email,
+      subject: `New contact form message — ${occasion}`,
+      text: `Name: ${name}\nEmail: ${email}\nOccasion: ${occasion}\n\n${message}`,
+    });
+  } catch (err) {
+    console.error("[contact] failed to send email", err);
+    return NextResponse.json(
+      { error: "Couldn't send your message. Please try again or email us directly." },
+      { status: 502 },
+    );
+  }
 
   return NextResponse.json({ ok: true });
 }
