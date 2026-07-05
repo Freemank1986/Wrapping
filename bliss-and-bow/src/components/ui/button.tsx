@@ -4,7 +4,7 @@ import Link from "next/link";
 type Variant = "primary" | "secondary";
 
 const base =
-  "inline-flex items-center justify-center px-6 py-3 text-sm tracking-wide transition-colors duration-200";
+  "inline-flex items-center justify-center px-6 py-3 text-sm tracking-wide transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed";
 
 const variants: Record<Variant, string> = {
   primary: "bg-gold text-charcoal hover:bg-gold/90",

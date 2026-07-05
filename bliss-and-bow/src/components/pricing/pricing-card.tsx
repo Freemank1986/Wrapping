@@ -103,7 +103,11 @@ export function PricingCard({
         >
           {loading ? "Redirecting…" : `Choose ${tier.name}`}
         </Button>
-        {error && <p className="mt-2 text-xs text-burgundy">{error}</p>}
+        {error && (
+          <p role="alert" aria-live="assertive" className="mt-2 text-xs text-burgundy">
+            {error}
+          </p>
+        )}
       </div>
     </motion.div>
   );

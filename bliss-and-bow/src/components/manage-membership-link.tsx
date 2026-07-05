@@ -30,11 +30,15 @@ export function ManageMembershipLink() {
       <button
         onClick={handleClick}
         disabled={loading}
-        className="text-xs uppercase tracking-wide text-charcoal/60 underline-offset-4 hover:text-burgundy hover:underline"
+        className="text-xs uppercase tracking-wide text-charcoal/60 underline-offset-4 hover:text-burgundy hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {loading ? "Opening…" : "Manage membership"}
       </button>
-      {error && <p className="text-xs text-burgundy">{error}</p>}
+      {error && (
+        <p role="alert" aria-live="assertive" className="text-xs text-burgundy">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

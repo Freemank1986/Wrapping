@@ -21,6 +21,7 @@ export function AboutSection() {
               src="/assets/carmenlaezza9LC76jFqtaYunsplash.jpeg"
               alt="Hands carefully tying a raffia knot around a wrapped gift"
               fill
+              priority
               className="object-cover"
               sizes="(min-width: 768px) 45vw, 100vw"
             />

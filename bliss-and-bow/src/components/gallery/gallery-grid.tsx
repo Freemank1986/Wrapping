@@ -30,6 +30,7 @@ export function GalleryGrid() {
                 alt={image.alt}
                 width={image.width}
                 height={image.height}
+                priority={i < 3}
                 className="w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
               />

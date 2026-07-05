@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
@@ -22,6 +22,7 @@ const item: Variants = {
 
 export function Hero() {
   const [videoReady, setVideoReady] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   // Defer attaching the video source until after first paint so the
   // poster image is what mobile visitors see immediately.
@@ -29,9 +30,30 @@ export function Hero() {
     setVideoReady(true);
   }, []);
 
+  // Pause the video whenever the hero scrolls out of view, so it isn't
+  // burning battery/bandwidth decoding frames nobody can see.
+  useEffect(() => {
+    const videoEl = videoRef.current;
+    if (!videoEl || !videoReady) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          videoEl.play().catch(() => {});
+        } else {
+          videoEl.pause();
+        }
+      },
+      { threshold: 0.25 },
+    );
+    observer.observe(videoEl);
+    return () => observer.disconnect();
+  }, [videoReady]);
+
   return (
     <section className="relative flex h-screen min-h-[640px] w-full items-center justify-center overflow-hidden">
       <video
+        ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover"
         poster="/assets/ribbon-hero-poster.jpg"
         autoPlay

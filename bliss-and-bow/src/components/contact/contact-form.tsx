@@ -7,12 +7,13 @@ import { Button } from "@/components/ui/button";
 const OCCASIONS = ["Birthday", "Wedding", "Holiday", "Corporate", "Other"];
 
 const fieldClass =
-  "w-full border border-gold/30 bg-white/60 px-4 py-3 text-charcoal placeholder:text-charcoal/40 focus:border-gold focus:outline-none";
+  "w-full border border-gold/30 bg-white/60 px-4 py-3 text-charcoal placeholder:text-charcoal/40 focus:border-gold focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed";
 const labelClass = "text-xs uppercase tracking-wide text-charcoal/60";
 
 export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
+  const submitting = status === "submitting";
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -44,7 +45,7 @@ export function ContactForm() {
       setStatus("success");
       form.reset();
     } catch {
-      setError("Something went wrong reaching the server.");
+      setError("Something went wrong reaching the server. Please try again.");
       setStatus("error");
     }
   }
@@ -67,26 +68,47 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} aria-busy={submitting} className="space-y-6">
       <div>
         <label htmlFor="name" className={labelClass}>
           Name
         </label>
-        <input id="name" name="name" type="text" required className={`mt-2 ${fieldClass}`} />
+        <input
+          id="name"
+          name="name"
+          type="text"
+          required
+          disabled={submitting}
+          className={`mt-2 ${fieldClass}`}
+        />
       </div>
 
       <div>
         <label htmlFor="email" className={labelClass}>
           Email
         </label>
-        <input id="email" name="email" type="email" required className={`mt-2 ${fieldClass}`} />
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          disabled={submitting}
+          className={`mt-2 ${fieldClass}`}
+        />
       </div>
 
       <div>
         <label htmlFor="occasion" className={labelClass}>
           Occasion
         </label>
-        <select id="occasion" name="occasion" required defaultValue="" className={`mt-2 ${fieldClass}`}>
+        <select
+          id="occasion"
+          name="occasion"
+          required
+          disabled={submitting}
+          defaultValue=""
+          className={`mt-2 ${fieldClass}`}
+        >
           <option value="" disabled>
             Select an occasion
           </option>
@@ -106,16 +128,21 @@ export function ContactForm() {
           id="message"
           name="message"
           required
+          disabled={submitting}
           rows={5}
           className={`mt-2 ${fieldClass}`}
         />
       </div>
 
-      <Button type="submit" variant="primary" disabled={status === "submitting"} className="w-full">
-        {status === "submitting" ? "Sending…" : "Send Message"}
+      <Button type="submit" variant="primary" disabled={submitting} className="w-full">
+        {submitting ? "Sending…" : "Send Message"}
       </Button>
 
-      {error && <p className="text-sm text-burgundy">{error}</p>}
+      {error && (
+        <p role="alert" aria-live="assertive" className="text-sm text-burgundy">
+          {error}
+        </p>
+      )}
     </form>
   );
 }
