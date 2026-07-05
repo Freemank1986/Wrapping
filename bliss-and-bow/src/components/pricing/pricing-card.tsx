@@ -95,14 +95,24 @@ export function PricingCard({
       </div>
 
       <div className="mt-8">
-        <Button
-          variant={tier.featured ? "primary" : "secondary"}
-          className="w-full"
-          onClick={handleCheckout}
-          disabled={loading}
-        >
-          {loading ? "Redirecting…" : `Choose ${tier.name}`}
-        </Button>
+        {billing === "perGift" ? (
+          <Button
+            href={`/book?tier=${tier.id}`}
+            variant={tier.featured ? "primary" : "secondary"}
+            className="w-full"
+          >
+            Choose {tier.name}
+          </Button>
+        ) : (
+          <Button
+            variant={tier.featured ? "primary" : "secondary"}
+            className="w-full"
+            onClick={handleCheckout}
+            disabled={loading}
+          >
+            {loading ? "Redirecting…" : `Choose ${tier.name}`}
+          </Button>
+        )}
         {error && (
           <p role="alert" aria-live="assertive" className="mt-2 text-xs text-burgundy">
             {error}

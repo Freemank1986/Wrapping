@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, type FormEvent } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { OCCASIONS } from "@/lib/occasions";
@@ -11,6 +12,7 @@ import {
   RUSH_FEE_CENTS,
   calculateOrderTotalCents,
   formatCents,
+  isValidTier,
   type TierId,
 } from "@/lib/order-pricing";
 
@@ -23,10 +25,14 @@ function todayISO() {
 }
 
 export function BookForm() {
+  const searchParams = useSearchParams();
+  const tierParam = searchParams.get("tier");
+  const initialTier: TierId = isValidTier(tierParam) ? tierParam : "signature";
+
   const [status, setStatus] = useState<"idle" | "submitting" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
 
-  const [tier, setTier] = useState<TierId>("signature");
+  const [tier, setTier] = useState<TierId>(initialTier);
   const [quantity, setQuantity] = useState(1);
   const [rush, setRush] = useState(false);
   const [delivery, setDelivery] = useState(false);

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -17,7 +18,9 @@ export default function BookPage() {
       <Container>
         <SectionHeading eyebrow="Book" title="Tell Us About Your Gift" />
         <div className="mx-auto mt-16 max-w-xl">
-          <BookForm />
+          <Suspense fallback={null}>
+            <BookForm />
+          </Suspense>
         </div>
       </Container>
     </main>
