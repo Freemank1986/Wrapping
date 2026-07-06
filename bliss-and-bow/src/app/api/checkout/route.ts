@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe, isStripeConfigured } from "@/lib/stripe";
+import { getTierByMonthlyPriceId } from "@/lib/pricing-plans";
 
 export async function POST(request: NextRequest) {
   if (!isStripeConfigured()) {
@@ -29,11 +30,13 @@ export async function POST(request: NextRequest) {
   }
 
   const origin = request.nextUrl.origin;
+  const tier = getTierByMonthlyPriceId(priceId);
 
   try {
     const session = await stripe.checkout.sessions.create({
       mode,
       line_items: [{ price: priceId, quantity: 1 }],
+      metadata: tier ? { tier: tier.id, tierName: tier.name } : undefined,
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/checkout/cancel`,
     });

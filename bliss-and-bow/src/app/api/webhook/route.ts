@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
+import { sendShopEmail } from "@/lib/email";
+import { formatCents } from "@/lib/order-pricing";
 
 export async function POST(request: NextRequest) {
   const stripe = getStripe();
@@ -27,28 +29,75 @@ export async function POST(request: NextRequest) {
   switch (event.type) {
     case "checkout.session.completed": {
       const session = event.data.object;
-      console.log("[stripe webhook] checkout.session.completed", {
-        sessionId: session.id,
-        mode: session.mode,
-        customer: session.customer,
-        customerEmail: session.customer_details?.email,
-        amountTotal: session.amount_total,
-        // Populated for /book orders (name, tier, quantity, rush, delivery,
-        // deliveryAddress, occasion, completionDate, styleNotes, giftMessage,
-        // specialInstructions, totalCents) — this metadata is the order
-        // record until a database and Resend are wired up.
-        orderDetails: session.metadata,
-      });
-      // TODO: send confirmation email once email sending is wired up.
+      const customerEmail = session.customer_details?.email ?? "unknown";
+      const amount = formatCents(session.amount_total ?? 0);
+      const meta = session.metadata ?? {};
+
+      try {
+        if (session.mode === "payment" && meta.tier) {
+          // A /book order — meta carries the full order detail.
+          await sendShopEmail({
+            replyTo: customerEmail,
+            subject: `New order — ${meta.occasion ?? ""} (${amount})`,
+            text: [
+              `Name: ${meta.name}`,
+              `Email: ${meta.email}`,
+              `Phone: ${meta.phone}`,
+              `Tier: ${meta.tier}`,
+              `Quantity: ${meta.quantity}`,
+              `Occasion: ${meta.occasion}`,
+              `Requested completion date: ${meta.completionDate}`,
+              `Rush: ${meta.rush}`,
+              `Delivery: ${meta.delivery}`,
+              meta.delivery === "true" ? `Delivery address: ${meta.deliveryAddress}` : null,
+              meta.styleNotes ? `Style notes: ${meta.styleNotes}` : null,
+              meta.giftMessage ? `Gift message: ${meta.giftMessage}` : null,
+              meta.specialInstructions ? `Special instructions: ${meta.specialInstructions}` : null,
+              `Total: ${amount}`,
+              `Stripe session: ${session.id}`,
+            ]
+              .filter(Boolean)
+              .join("\n"),
+          });
+        } else if (session.mode === "subscription") {
+          await sendShopEmail({
+            replyTo: customerEmail,
+            subject: `New membership signup — ${meta.tierName ?? "Bliss & Bow"} (${amount}/mo)`,
+            text: [
+              `Customer email: ${customerEmail}`,
+              `Tier: ${meta.tierName ?? meta.tier ?? "unknown"}`,
+              `Amount: ${amount}/month`,
+              `Stripe customer: ${session.customer}`,
+              `Stripe session: ${session.id}`,
+            ].join("\n"),
+          });
+        } else {
+          console.log("[stripe webhook] checkout.session.completed (no matching handler)", {
+            sessionId: session.id,
+            mode: session.mode,
+          });
+        }
+      } catch (err) {
+        console.error("[stripe webhook] failed to send order notification email", err);
+      }
       break;
     }
     case "customer.subscription.deleted": {
       const subscription = event.data.object;
-      console.log("[stripe webhook] customer.subscription.deleted", {
-        subscriptionId: subscription.id,
-        customer: subscription.customer,
-      });
-      // TODO: send cancellation email once email sending is wired up.
+      try {
+        const customer = await stripe.customers.retrieve(subscription.customer as string);
+        const customerEmail = !customer.deleted ? customer.email ?? "unknown" : "unknown";
+        await sendShopEmail({
+          subject: "Membership canceled",
+          text: [
+            `Customer email: ${customerEmail}`,
+            `Stripe customer: ${subscription.customer}`,
+            `Subscription: ${subscription.id}`,
+          ].join("\n"),
+        });
+      } catch (err) {
+        console.error("[stripe webhook] failed to send cancellation notification email", err);
+      }
       break;
     }
     default:

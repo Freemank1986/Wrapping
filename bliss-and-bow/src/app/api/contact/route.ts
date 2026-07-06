@@ -1,14 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
 import { OCCASIONS } from "@/lib/occasions";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-// Resend's shared sandbox sender — works without a verified domain, but can
-// only deliver to the email address the Resend account was created with.
-// Once blissandbow.com is verified in Resend, switch this to an
-// address on that domain (e.g. "Bliss & Bow <hello@blissandbow.com>").
-const FROM_EMAIL = "Bliss & Bow Website <onboarding@resend.dev>";
-const TO_EMAIL = "Blissandbowwrapco@gmail.com";
+import { sendShopEmail } from "@/lib/email";
 
 // Simple in-memory rate limit: 5 submissions per IP per 10 minutes. This
 // resets on cold start and doesn't share state across serverless instances,
@@ -63,9 +55,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    await resend.emails.send({
-      from: FROM_EMAIL,
-      to: TO_EMAIL,
+    await sendShopEmail({
       replyTo: email,
       subject: `New contact form message — ${occasion}`,
       text: `Name: ${name}\nEmail: ${email}\nOccasion: ${occasion}\n\n${message}`,
