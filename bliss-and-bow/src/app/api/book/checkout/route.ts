@@ -125,6 +125,7 @@ export async function POST(request: NextRequest) {
       customer_email: email,
       line_items: lineItems,
       metadata: {
+        orderType: "gift-wrap",
         name: truncate(name),
         email: truncate(email),
         phone: truncate(phone),

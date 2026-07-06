@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
       const meta = session.metadata ?? {};
 
       try {
-        if (session.mode === "payment" && meta.tier) {
+        if (session.mode === "payment" && meta.orderType === "gift-wrap") {
           // A /book order — meta carries the full order detail.
           await sendShopEmail({
             replyTo: customerEmail,
@@ -54,6 +54,23 @@ export async function POST(request: NextRequest) {
               meta.giftMessage ? `Gift message: ${meta.giftMessage}` : null,
               meta.specialInstructions ? `Special instructions: ${meta.specialInstructions}` : null,
               `Total: ${amount}`,
+              `Stripe session: ${session.id}`,
+            ]
+              .filter(Boolean)
+              .join("\n"),
+          });
+        } else if (session.mode === "payment" && meta.orderType === "shop") {
+          // A /shop order — meta carries a summary of items purchased.
+          await sendShopEmail({
+            replyTo: customerEmail,
+            subject: `New shop order — ${meta.fulfillment} (${amount})`,
+            text: [
+              `Name: ${meta.name}`,
+              `Email: ${meta.email}`,
+              `Items: ${meta.items}`,
+              `Fulfillment: ${meta.fulfillment}`,
+              meta.fulfillment === "shipping" ? `Shipping address: ${meta.shippingAddress}` : null,
+              `Total (incl. tax): ${amount}`,
               `Stripe session: ${session.id}`,
             ]
               .filter(Boolean)

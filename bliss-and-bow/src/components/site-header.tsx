@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 
 const links = [
   { href: "/pricing", label: "Pricing" },
+  { href: "/shop", label: "Shop" },
   { href: "/gallery", label: "Gallery" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
