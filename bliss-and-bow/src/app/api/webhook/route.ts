@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
-import { sendShopEmail } from "@/lib/email";
+import { sendShopEmail, sendEmail } from "@/lib/email";
 import { formatCents } from "@/lib/order-pricing";
+import { SITE_URL } from "@/lib/site-config";
+
+function isRealEmail(value: string): boolean {
+  return value !== "unknown" && value.includes("@");
+}
 
 export async function POST(request: NextRequest) {
   const stripe = getStripe();
@@ -32,6 +37,7 @@ export async function POST(request: NextRequest) {
       const customerEmail = session.customer_details?.email ?? "unknown";
       const amount = formatCents(session.amount_total ?? 0);
       const meta = session.metadata ?? {};
+      const orderLookupUrl = `${SITE_URL}/order-lookup?session_id=${session.id}`;
 
       try {
         if (session.mode === "payment" && meta.orderType === "gift-wrap") {
@@ -59,6 +65,32 @@ export async function POST(request: NextRequest) {
               .filter(Boolean)
               .join("\n"),
           });
+
+          if (isRealEmail(customerEmail)) {
+            await sendEmail({
+              to: customerEmail,
+              subject: "Your Bliss & Bow order is confirmed",
+              text: [
+                `Hi ${meta.name ?? "there"},`,
+                "",
+                `Thanks for your order! Here's what we have on file:`,
+                "",
+                `Tier: ${meta.tier}`,
+                `Quantity: ${meta.quantity}`,
+                `Occasion: ${meta.occasion}`,
+                `Requested completion date: ${meta.completionDate}`,
+                meta.delivery === "true" ? `Delivery address: ${meta.deliveryAddress}` : "Pickup: in-store drop-off",
+                `Total charged: ${amount}`,
+                "",
+                `You can look up this order any time here: ${orderLookupUrl}`,
+                "",
+                "Questions? Just reply to this email.",
+                "— Bliss & Bow",
+              ]
+                .filter(Boolean)
+                .join("\n"),
+            });
+          }
         } else if (session.mode === "payment" && meta.orderType === "shop") {
           // A /shop order — meta carries a summary of items purchased.
           await sendShopEmail({
@@ -76,6 +108,27 @@ export async function POST(request: NextRequest) {
               .filter(Boolean)
               .join("\n"),
           });
+
+          if (isRealEmail(customerEmail)) {
+            await sendEmail({
+              to: customerEmail,
+              subject: "Your Bliss & Bow shop order is confirmed",
+              text: [
+                `Hi ${meta.name ?? "there"},`,
+                "",
+                "Thanks for your order! Here's what we have on file:",
+                "",
+                `Items: ${meta.items}`,
+                `Fulfillment: ${meta.fulfillment}`,
+                `Total charged (incl. tax): ${amount}`,
+                "",
+                `You can look up this order any time here: ${orderLookupUrl}`,
+                "",
+                "Questions? Just reply to this email.",
+                "— Bliss & Bow",
+              ].join("\n"),
+            });
+          }
         } else if (session.mode === "subscription") {
           await sendShopEmail({
             replyTo: customerEmail,
@@ -88,6 +141,23 @@ export async function POST(request: NextRequest) {
               `Stripe session: ${session.id}`,
             ].join("\n"),
           });
+
+          if (isRealEmail(customerEmail)) {
+            await sendEmail({
+              to: customerEmail,
+              subject: "Welcome to your Bliss & Bow membership",
+              text: [
+                "Welcome to Bliss & Bow!",
+                "",
+                `Your ${meta.tierName ?? "membership"} is now active at ${amount}/month.`,
+                "",
+                "You can manage or cancel your membership any time from the \"Manage membership\" link in the site footer.",
+                "",
+                "Questions? Just reply to this email.",
+                "— Bliss & Bow",
+              ].join("\n"),
+            });
+          }
         } else {
           console.log("[stripe webhook] checkout.session.completed (no matching handler)", {
             sessionId: session.id,
@@ -112,6 +182,19 @@ export async function POST(request: NextRequest) {
             `Subscription: ${subscription.id}`,
           ].join("\n"),
         });
+
+        if (isRealEmail(customerEmail)) {
+          await sendEmail({
+            to: customerEmail,
+            subject: "Your Bliss & Bow membership has been canceled",
+            text: [
+              "Your membership has been canceled and will not renew.",
+              "",
+              "If that wasn't intentional, or you'd like to restart, just reply to this email.",
+              "— Bliss & Bow",
+            ].join("\n"),
+          });
+        }
       } catch (err) {
         console.error("[stripe webhook] failed to send cancellation notification email", err);
       }

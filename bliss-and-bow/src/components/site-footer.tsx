@@ -13,6 +13,9 @@ export function SiteFooter() {
           <p className="font-serif text-lg text-charcoal">Bliss &amp; Bow</p>
           <ManageMembershipLink />
           <div className="flex gap-6">
+            <Link href="/order-lookup" className={linkClass}>
+              Order Lookup
+            </Link>
             <Link href="/terms" className={linkClass}>
               Terms
             </Link>
